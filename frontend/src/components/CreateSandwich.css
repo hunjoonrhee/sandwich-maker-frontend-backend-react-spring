@@ -1,0 +1,10 @@
+.form-order{
+    display: flex;
+    flex-direction: column;
+}
+.form-label{
+    justify-content: right;
+}
+input {
+    align-items: center;
+}
