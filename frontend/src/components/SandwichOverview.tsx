@@ -1,6 +1,7 @@
 import SandwichDetails from "./SandwichDetails";
 import {Sandwich} from "../model/Sandwich";
 import "./SandwichOverview.css"
+import SandwichOrderCard from "./SandwichOrderCard";
 
 type SandwichOverviewProps = {
     sandwiches : Sandwich[];
@@ -12,7 +13,7 @@ export default function SandwichOverview(props : SandwichOverviewProps){
     return (
         <div className="menu-list">
             {props.sandwiches.map((sandwich) =>
-                <SandwichDetails key={sandwich.id} sandwich={sandwich} deleteSandwich={props.deleteSandwich} /> ) }
+                <SandwichOrderCard key={sandwich.id} sandwich={sandwich} deleteSandwich={props.deleteSandwich} /> ) }
         </div>
     )
 

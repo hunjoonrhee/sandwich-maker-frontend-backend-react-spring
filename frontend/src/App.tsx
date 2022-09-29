@@ -4,6 +4,8 @@ import axios from "axios";
 import SandwichOverview from "./components/SandwichOverview";
 import CreateSandwich from "./components/CreateSandwich";
 import {Sandwich} from "./model/Sandwich";
+import {HashRouter, Route, Routes} from "react-router-dom";
+import SandwichDetails from "./components/SandwichDetails";
 
 function App() {
   // Creates a state "sandwiches" and gives us a method to change/set it
@@ -32,15 +34,33 @@ function App() {
     axios.delete("/api/sandwich/" + id)
         .then(loadSandwiches) // reload sandwiches from backend
   }
+
+  let isOrdered:boolean = sandwiches.length>0;
   
   return (
     <div className="App">
       <header className="App-header">
         <h1>Bestellungen</h1>
+        {
+          isOrdered ?
+              <HashRouter>
+                <Routes>
+                  <Route path={"/"} element={
+                    <div>
+                      <SandwichOverview sandwiches={sandwiches} deleteSandwich={deleteSandwich} />
+                      <CreateSandwich addSandwich={addSandwich} />
+                    </div>
 
-        <SandwichOverview sandwiches={sandwiches} deleteSandwich={deleteSandwich} />
-        <CreateSandwich addSandwich={addSandwich} />
-
+                  }/>
+                  <Route path={"/:id"} element={<SandwichDetails sandwiches={sandwiches}/>}/>
+                </Routes>
+              </HashRouter>
+              :
+              <div>
+                <p> Bitte stellen Sie eine Bestellung auf:</p>
+                <CreateSandwich addSandwich={addSandwich} />
+              </div>
+        }
       </header>
     </div>
   );

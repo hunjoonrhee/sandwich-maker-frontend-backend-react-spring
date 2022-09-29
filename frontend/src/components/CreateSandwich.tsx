@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {Sandwich} from "../model/Sandwich";
 import "./CreateSandwich.css"
 
@@ -45,8 +45,14 @@ export default function CreateSandwich(props: CreateSandwichProps) {
         )
     }
 
-    const handleSubmit = () => {
-        props.addSandwich(sandwich)
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        if(sandwich.name!="" && sandwich.patty !="" && sandwich.extraWishes !=""){
+            props.addSandwich(sandwich)
+        }else{
+            alert("Bitte füllen Sie alle Angaben aus")
+        }
+
     }
 
     /*
@@ -55,16 +61,17 @@ export default function CreateSandwich(props: CreateSandwichProps) {
     return (
         <div>
             <form className={"form-order"} onSubmit={handleSubmit}>
-                <label className={"form-label"}>
-                    ID:
-                    <input
-                        name="id"
-                        placeholder="ID"
-                        type="text"
-                        value={sandwich.id}
-                        onChange={handleChange}
-                    />
-                </label>
+                {/*<label className={"form-label"}>*/}
+                {/*    ID:*/}
+                {/*    <input*/}
+                {/*        name="id"*/}
+                {/*        placeholder="ID"*/}
+                {/*        type="text"*/}
+                {/*        value={sandwich.id}*/}
+                {/*        onChange={handleChange}*/}
+                {/*    />*/}
+                {/*</label>*/}
+
                 <label className={"form-label"}>
                     Name:
                     <input
@@ -90,14 +97,14 @@ export default function CreateSandwich(props: CreateSandwichProps) {
                     <input
                         name="numberOfPatties"
                         placeholder="number Of Patties"
-                        type="text"
+                        type="number"
                         value={sandwich.numberOfPatties}
                         onChange={handleChange}
                     />
                 </label>
-                <label>
+                <label className={"form-label"}>
                     Grilled:
-                    <input
+                    <input className={"form-cb"}
                         name="grilled"
                         type="checkbox"
                         checked={sandwich.grilled}
@@ -114,7 +121,7 @@ export default function CreateSandwich(props: CreateSandwichProps) {
                         onChange={handleChange}
                     />
                 </label>
-                <input type={"submit"} value={"Bestellung hinzufügen"}/>
+                <input className={"form-submit"} type={"submit"} value={"Bestellung hinzufügen"}/>
             </form>
             {/* TODO: onClick hier entfernen und props.addSandwich in handleSubmit verschieben */}
             {/*<button >Bestellung hinzufügen</button>*/}
